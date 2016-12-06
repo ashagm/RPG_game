@@ -1,6 +1,7 @@
 var $isFighterChosen = false;
 var $isDefenderChosen = false;
 var $isGameOn = false;
+
 var $fighter;
 var $defender;
 var $fighterHP;
@@ -8,8 +9,9 @@ var $fighterAP;
 var $fighterCAP;
 var $defenderHP;
 var $defenderAP;
-	var fighterScoreDiv;
-	var defenderScoreDiv;
+var $defenderCAP;
+var fighterScoreDiv;
+var defenderScoreDiv;
 
 
 var characters = {
@@ -31,84 +33,125 @@ var characters = {
 
 	kumbakarna: {
 		name: 'kumbakarna',
-		healthPoints: 25,
+		healthPoints: 50,
 		attackPower: 3,
 		counterAttackPower: 1
 	},
 
 	tataka : {
 		name:'tataka',
-		healthPoints: 20,
+		healthPoints: 30,
 		attackPower: 2,
 		counterAttackPower: 1
 	}
 }
 
+var game = {	
+
+	init: function(){
+		$("#attackBtn").attr("disabled", true);
+		$("#resetBtn").hide();
+	},
+
+	reset: function(){
+		$isDefenderChosen = false;
+    	$isGameOn = false;
+    	$fighterHP = characters[$fighter].healthPoints;
+    	$defenderHP = characters[$defender].healthPoints;
+    	$fighterAP = characters[$fighter].attackPower;
+    	$defenderAP = characters[$defender].attackPower;
+    	$("#attackBtn").attr("disabled", true);
+	}
+}
+
 
 $(document).ready(function(){
-	//disable attack button
 
-	$("#attackBtn").attr("disabled", true);
+	game.init();
 
 	//select the fighter, enable attack button
 	$('.charImage').on('click', function(){
-		// 
 		if(!$isFighterChosen){
 			$fighter = $(this).data('name');
 			$(this).css("border", "5px solid #00FF00");
 			$(this).appendTo('#fighterDiv');
+			
 			$isFighterChosen = true;
 			$isGameOn = true;
+			
 			$fighterHP = characters[$fighter].healthPoints;
 			$fighterAP = characters[$fighter].attackPower;
 			$fighterCAP = characters[$fighter].counterAttackPower;
+			
 			$fighterScoreDiv = $('#' + $fighter +'Fig');
+		
 		}else if (!$isDefenderChosen){
 			$defender = $(this).data('name');
 			$isDefenderChosen = true;
 			$(this).css("border", "5px solid #FF0000");
 			$(this).appendTo('#defenderDiv');
-			console.log($defender);
+			
 			$defenderHP = characters[$defender].healthPoints;
 			$defenderAP = characters[$defender].attackPower;
+			$defenderCAP = characters[$defender].counterAttackPower;
+			
 			$defenderScoreDiv = $('#' + $defender +'Fig');
+		
 		}else{
 			alert("The game is on...wait.")
 		}
 
 		$("#attackBtn").attr("disabled", false);
 		console.log($fighter, $defender);
+
+		$("#resetBtn").on('click', function(){
+			location.reload();
+		});
+
 	});
 
-	
 
 	$("#attackBtn").on('click', function(){
 		console.log(fighterScoreDiv, defenderScoreDiv);
 		
-		//Each time the player attacks, their character's Attack Power increases
-		// by its base Attack Power.
-
-		//For example, if the base Attack Power is 6, each attack will increase 
-		//the Attack Power by 6 (12, 18, 24, 30 and so on).
-		$fighterHP -= $defenderAP;
+		$fighterHP -= $defenderCAP;
 		$($fighterScoreDiv).html($fighterHP);
 
-		console.log('fighterAP=', $fighterAP, $fighterCAP);
+		console.log('fighterAP=', $fighterAP, "fighterCAP=", $fighterCAP);
 		$defenderHP -=$fighterAP;
 		$fighterAP = $fighterAP + $fighterCAP;
 		$($defenderScoreDiv).html($defenderHP);
 
+		var $status = 'You attacked ' + $defender + ' for ' + $fighterAP + ' points!' + '</br>'+
+					$defender + ' attacked you back with ' + $defenderCAP + ' points ';	
 
+		$('#attackStatus').html($status);
+		$('#attackStatus').css('color', '#FF8C00');
 
 		console.log($fighterHP, $defenderHP);
 
 		if($defenderHP <=0){
-			alert('you lose!');
+
+			$('#attackStatus').html('You defeated ' + $defender + '!');
+			$('#attackStatus').css('color', 'green');
+			var id= "#" + $defender;
+
+			// $(id).appendTo('#defeatedDiv');
+			console.log('defender' + id);
+
+			$(id).hide('slow');
+
+			$("#resetBtn").show();
+
+			reset();
+		}else if ($fighterHP <=0){
+			var id= "#" + $fighter;
+			var $status = 'You have been defeated! Game over! Play Again!'
+			$('#attackStatus').html($status);
+
 		}
 
-
-	})
-
+	});
 
 
 });

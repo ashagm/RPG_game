@@ -8,33 +8,30 @@ body{
 	background-image: url("../images/Ramayana-bg.jpg");
 	background-size:  cover;  
 	background-repeat: no-repeat;
-	font-weight: bold;
-	font-size: 20px;
-	color: #ffffff;
+	color: #FFA500;
+	font-size: 25px;
+	font-family: 'Joti One','Caesar Dressing', 'Diplomata', 'Ewert',  cursive;
 }
 
 .container {
 	min-height: 100%;
 }
 
+#header{
+	font-size: 30px;
+}
 
 .area1 .col-md-3,
 .area2 .col-md-4,
-.area3 .col-md-3{
-	border: 1px solid #ffffff;
+.area3 .col-md-12
+/*.area4 .col-md-4
+*/{
+	/*border: 1px solid #ffffff;*/
 	height: 200px;
 }
 
-.col-md-3{
-	/*border-right: 1px solid red;*/
-}
-
-.col-md-4{
-	/*border-right: 1px solid red;*/
-}
-
 div img{
-	width: 150px;
+	width: 200px;
 	height: 150px;
     margin: 0 auto;
 }
@@ -42,15 +39,15 @@ div img{
 figure{
 	/*border: 1px solid red;*/
 	 margin: 0 auto;
-	 width: 160px;
+	 width: 210px;
 }
 .charImage figcaption{
 	text-align: center;
-	background-color: #ffffff;
-	color: red;
-	width: 150px;
+	background-color: #000000;
+	color: #ffffff;
+	width: 200px;
 	margin: 0 auto;
-	border: 1px solid yellow;
+	border: 1px solid #000000;
 }
 
 #attackBtn{
@@ -68,11 +65,24 @@ figure{
 	 text-align: center;
 }
 
+#attackStatus{
+	padding-top: 50px;
+}
 
 #colHeader{
 	text-align: center;
+	font-weight: bold;
+	/*font-size: 40px;*/
 }
 
 .thumbnail {
 	margin-bottom: 0px;
+}
+
+.marginAbove{
+	margin-top: 10px;
+}
+
+#resetBtn{
+	padding: 10px 20px;
 }
