@@ -1,0 +1,78 @@
+html {
+	min-height: 100%;
+	position: relative;
+}
+
+body{
+	margin: 0 auto;
+	background-image: url("../images/Ramayana-bg.jpg");
+	background-size:  cover;  
+	background-repeat: no-repeat;
+	font-weight: bold;
+	font-size: 20px;
+	color: #ffffff;
+}
+
+.container {
+	min-height: 100%;
+}
+
+
+.area1 .col-md-3,
+.area2 .col-md-4,
+.area3 .col-md-3{
+	border: 1px solid #ffffff;
+	height: 200px;
+}
+
+.col-md-3{
+	/*border-right: 1px solid red;*/
+}
+
+.col-md-4{
+	/*border-right: 1px solid red;*/
+}
+
+div img{
+	width: 150px;
+	height: 150px;
+    margin: 0 auto;
+}
+
+figure{
+	/*border: 1px solid red;*/
+	 margin: 0 auto;
+	 width: 160px;
+}
+.charImage figcaption{
+	text-align: center;
+	background-color: #ffffff;
+	color: red;
+	width: 150px;
+	margin: 0 auto;
+	border: 1px solid yellow;
+}
+
+#attackBtn{
+	 /*margin: 0 auto;*/
+	 margin: 50px 0px 0px 0px;
+	 color: #000000;
+	 font-weight: bold;
+	 font-size: 25px;
+	 background-color: 	#D4AF37;
+	 padding: 20px 40px;
+}
+
+#attackDiv{
+	 /*margin: 0 auto;*/
+	 text-align: center;
+}
+
+
+#colHeader{
+	text-align: center;
+}
+
+.thumbnail {
+	margin-bottom: 0px;
+}
