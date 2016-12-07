@@ -12,15 +12,27 @@
     <link href="https://fonts.googleapis.com/css?family=Joti+One|Caesar+Dressing|Diplomata|Ewert" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<script src="assets/javascript/game.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 <div class="container" id = "wrapper">
 
 	<div class="row ">
-		<div class="col-md-12 text-center" id="header">
-			Pick your Fighter and a Defender	
+		<div class="col-md-1 text-center">
+		<button class="btn btn-link" id="audioBtn" "> On/Off music </button>
+		<audio src="assets/sounds/war.mp3" id="sound" autoplay>
+		<p>No audio</p>
+		</audio>
+		</div>
+		<div class="col-md-10 text-center" id="header">
+			Pick your Warrior and an Enemy	
+		</div>
+		<div class="col-md-1 text-center">
+		<button class="btn btn-link" id="play" data-toggle="modal" data-target="#myModal"> How to Play </button>
 		</div>
 
 	</div>
@@ -53,14 +65,17 @@
 		</div>
 	</div>
 	<div class = "row area3">
-	<div class="col-md-12 text-center">
+
+	<div class="col-md-12 text-center">	
+		<div> Battleground </div>	
 		<div id="attackStatus"></div>
 		<button class= "btn btn-danger" id="resetBtn">Reset</button>
+
 		
 	</div>
 	</div>
 	<div class = "row marginAbove" id="colHeader">
-		<div class="col-md-4"> Fighter </div>		
+		<div class="col-md-4"> Warrior </div>		
 		<div class="col-md-4"> </div>
 		<div class="col-md-4"> Defender </div>
 	</div>
@@ -68,12 +83,43 @@
 		<div class="col-md-4" id ="fighterDiv">
 		</div>
 		<div class="col-md-4" id="attackDiv">
+
 			<button class= "btn btn-default" id="attackBtn">Attack</button>
 		</div>
 		<div class="col-md-4" id="defenderDiv">
 		</div>
 	</div>
 
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">RPG Instructions</h4>
+      </div>
+      <div class="modal-body" id="instructions">
+	    	<p>Choose YOUR Warrior character by clicking on the fighter's picture. Choose an opponent by clicking on an enemy's picture.</p>
+
+			<p> Click on 'ATTACK' to damage the defender.
+		 	The opponent will lose HP (health points). 
+			The opponent character will instantly counter the attack. 
+			The players will lose some of their HP. Points are shown at the bottom of the player character's picture.
+			The player will keep hitting the attack button in an effort to defeat their opponent. </p>
+
+			<p>When the defender's HP is reduced to zero or below,  enemy is removed and player character can now choose a new opponent.</p>
+			<p>The player wins the game by defeating all enemy characters. The player loses the game the game if their character's HP falls to zero or below.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 </body>

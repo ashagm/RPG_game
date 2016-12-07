@@ -5,7 +5,7 @@ html {
 
 body{
 	margin: 0 auto;
-	background-image: url("../images/Ramayana-bg.jpg");
+	background-image: url("../images/Ramayana-bg3.jpg");
 	background-size:  cover;  
 	background-repeat: no-repeat;
 	color: #FFA500;
@@ -85,4 +85,10 @@ figure{
 
 #resetBtn{
 	padding: 10px 20px;
+}
+
+#instructions{
+	font-size: 14px;
+	background-color: #000000;
+	color: #ffffff;
 }

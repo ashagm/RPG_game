@@ -13,6 +13,8 @@ var $defenderCAP;
 var fighterScoreDiv;
 var defenderScoreDiv;
 
+var defenderCount = [];
+
 
 var characters = {
 
@@ -71,6 +73,7 @@ $(document).ready(function(){
 
 	//select the fighter, enable attack button
 	$('.charImage').on('click', function(){
+		sound('select');
 		if(!$isFighterChosen){
 			$fighter = $(this).data('name');
 			$(this).css("border", "5px solid #00FF00");
@@ -86,16 +89,23 @@ $(document).ready(function(){
 			$fighterScoreDiv = $('#' + $fighter +'Fig');
 		
 		}else if (!$isDefenderChosen){
-			$defender = $(this).data('name');
-			$isDefenderChosen = true;
-			$(this).css("border", "5px solid #FF0000");
-			$(this).appendTo('#defenderDiv');
+			if($isFighterChosen && ($(this).data('name') === $fighter)){
+				alert('You cannot choose the fighter');
+			}else{
 			
-			$defenderHP = characters[$defender].healthPoints;
-			$defenderAP = characters[$defender].attackPower;
-			$defenderCAP = characters[$defender].counterAttackPower;
-			
-			$defenderScoreDiv = $('#' + $defender +'Fig');
+				$defender = $(this).data('name');
+				$isDefenderChosen = true;
+				$(this).css("border", "5px solid #FF0000");
+				$(this).appendTo('#defenderDiv');
+				
+				$defenderHP = characters[$defender].healthPoints;
+				$defenderAP = characters[$defender].attackPower;
+				$defenderCAP = characters[$defender].counterAttackPower;
+				
+				$defenderScoreDiv = $('#' + $defender +'Fig');
+
+				defenderCount.push($defender);
+			}
 		
 		}else{
 			alert("The game is on...wait.")
@@ -112,12 +122,17 @@ $(document).ready(function(){
 
 
 	$("#attackBtn").on('click', function(){
-		console.log(fighterScoreDiv, defenderScoreDiv);
+
+		sound('attack');
+		//console.log(fighterScoreDiv, defenderScoreDiv);
 		
+		// fighter attack, fighterHP - defenderCAP, update Div
 		$fighterHP -= $defenderCAP;
 		$($fighterScoreDiv).html($fighterHP);
 
-		console.log('fighterAP=', $fighterAP, "fighterCAP=", $fighterCAP);
+		//console.log('fighterAP=', $fighterAP, "fighterCAP=", $fighterCAP);
+
+
 		$defenderHP -=$fighterAP;
 		$fighterAP = $fighterAP + $fighterCAP;
 		$($defenderScoreDiv).html($defenderHP);
@@ -130,28 +145,101 @@ $(document).ready(function(){
 
 		console.log($fighterHP, $defenderHP);
 
-		if($defenderHP <=0){
 
-			$('#attackStatus').html('You defeated ' + $defender + '!');
+		if($defenderHP <=0){
+			console.log('defenderCount' , defenderCount.length);
+			if(defenderCount.length <3)
+			{
+				$('#attackStatus').html('You defeated ' + $defender + '!' + '</br>' + 'Pick another Defender!' );
+					sound('win');	
+			}else{
+				$('#attackStatus').html('You defended all Enemies! <br> Press Reset to Play again!');
+				sound('victory');
+				$("#resetBtn").show();
+			}
+			
 			$('#attackStatus').css('color', 'green');
 			var id= "#" + $defender;
 
-			// $(id).appendTo('#defeatedDiv');
-			console.log('defender' + id);
+			// console.log('defender' + id);
 
 			$(id).hide('slow');
 
-			$("#resetBtn").show();
+			game.reset();
 
-			reset();
 		}else if ($fighterHP <=0){
 			var id= "#" + $fighter;
 			var $status = 'You have been defeated! Game over! Play Again!'
 			$('#attackStatus').html($status);
+			$("#attackBtn").attr("disabled", true);
+			
+			$("#resetBtn").show();
 
 		}
 
 	});
+
+	function sound(str){
+    var audio = document.createElement("audio");
+    if(str ==="attack"){
+    	audio.src = "assets/sounds/attack.wav";
+	}else if(str === "select"){
+		audio.src = "assets/sounds/select.wav";
+	}else if(str === "win"){
+		audio.src = "assets/sounds/win.wav";
+	}else if(str === "victory"){
+		audio.src = "assets/sounds/victory.wav";
+	}
+    audio.play();   
+	}
+
+
+
+
+$(function() {
+var body = $('body');
+var backgrounds = new Array(
+'url("assets/images/Ramayana-bg.jpg")',
+'url("assets/images/Ramayana-bg2.jpg")',
+'url("assets/images/Ramayana-bg3.jpg")',
+'url("assets/images/Ramayana-bg4.jpg")',
+'url("assets/images/Ramayana-bg5.jpg")',
+'url("assets/images/Ramayana-bg6.jpg")',
+'url("assets/images/Ramayana-bg7.jpg")',
+'url("assets/images/Ramayana-bg8.jpg")',
+'url("assets/images/Ramayana-bg9.jpg")',
+'url("assets/images/Ramayana-bg10.jpg")',
+'url("assets/images/Ramayana-bg11.jpg")'
+);
+
+var current = 0;
+
+function nextBackground() {
+	body.css(
+	'background',
+		backgrounds[current = ++current % backgrounds.length]
+	);
+
+	body.css('background-size',  'cover');
+
+	setTimeout(nextBackground, 5000);
+}
+setTimeout(nextBackground, 10000);
+body.css('background', backgrounds[0]);
+body.css('background-size',  'cover');
+
+});
+
+
+$('#audioBtn').on('click', function(){
+	var source = "assets/sounds/war.mp3";
+
+	if($('#sound').attr('src') === source){
+		$('#sound').attr('src', " ");
+	}else{
+		$('#sound').attr('src', source)
+	}
+});
 
 
 });
