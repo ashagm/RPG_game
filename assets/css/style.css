@@ -22,12 +22,15 @@ body{
 }
 
 .area1 .col-md-3,
-.area2 .col-md-4,
-.area3 .col-md-12
+.area2 .col-md-4
 /*.area4 .col-md-4
 */{
 	/*border: 1px solid #ffffff;*/
 	height: 200px;
+}
+
+.area3 .col-md-12{
+	height: 160px;
 }
 
 div img{
@@ -67,6 +70,7 @@ figure{
 
 #attackStatus{
 	padding-top: 50px;
+	font-size: 30px;
 }
 
 #colHeader{
@@ -84,11 +88,44 @@ figure{
 }
 
 #resetBtn{
-	padding: 10px 20px;
+	padding: 20px 30px;
+	color: #ffffff;
+	background-color: #000000;
 }
 
 #instructions{
 	font-size: 14px;
 	background-color: #000000;
 	color: #ffffff;
+}
+
+#battleTxt {
+
+    color: red;
+    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+    animation-name: battleText;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes battleText {
+    from {color: red;}
+    to {color: yellow;}
+}
+
+/* Standard syntax */
+@keyframes battleText {
+    0%   {color: red;}
+    10%  {color: yellow;}
+    20%  {color: green;}
+    30%  {color: aqua;}
+    40%  {color: blue;}
+    50%  {color: white;}
+    60%  {color: purple;}
+    70%  {color: fuchsia;}
+    80%  {color: maroon;}
+    90%  {color: grey;}
+    100% {color: black;}
 }

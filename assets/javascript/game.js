@@ -20,29 +20,29 @@ var characters = {
 
 	rama: {
 		name: 'rama',
-		healthPoints: 100,
+		healthPoints: 200,
 		attackPower: 10,
-		counterAttackPower: 3
+		counterAttackPower: 6
 
 	},
 
 	ravana: {
 		name: 'ravana',
-		healthPoints: 80,
+		healthPoints: 100,
 		attackPower: 5,
-		counterAttackPower: 2
+		counterAttackPower: 3
 	},
 
 	kumbakarna: {
 		name: 'kumbakarna',
-		healthPoints: 50,
+		healthPoints: 80,
 		attackPower: 3,
-		counterAttackPower: 1
+		counterAttackPower: 2
 	},
 
 	tataka : {
 		name:'tataka',
-		healthPoints: 30,
+		healthPoints: 50,
 		attackPower: 2,
 		counterAttackPower: 1
 	}
@@ -52,7 +52,12 @@ var game = {
 
 	init: function(){
 		$("#attackBtn").attr("disabled", true);
+		$("#attackBtn").hide();
 		$("#resetBtn").hide();
+		$('#ramaFig').html(characters['rama'].healthPoints);
+		$('#ravanaFig').html(characters['ravana'].healthPoints);
+		$('#kumbakarnaFig').html(characters['kumbakarna'].healthPoints);
+		$('#tatakaFig').html(characters['tataka'].healthPoints);
 	},
 
 	reset: function(){
@@ -63,6 +68,7 @@ var game = {
     	$fighterAP = characters[$fighter].attackPower;
     	$defenderAP = characters[$defender].attackPower;
     	$("#attackBtn").attr("disabled", true);
+    	$("#attackBtn").hide();
 	}
 }
 
@@ -71,12 +77,12 @@ $(document).ready(function(){
 
 	game.init();
 
-	//select the fighter, enable attack button
 	$('.charImage').on('click', function(){
 		sound('select');
+
 		if(!$isFighterChosen){
 			$fighter = $(this).data('name');
-			$(this).css("border", "5px solid #00FF00");
+			$(this).css("border", "4px solid #00FF00");
 			$(this).appendTo('#fighterDiv');
 			
 			$isFighterChosen = true;
@@ -89,10 +95,14 @@ $(document).ready(function(){
 			$fighterScoreDiv = $('#' + $fighter +'Fig');
 		
 		}else if (!$isDefenderChosen){
-			if($isFighterChosen && ($(this).data('name') === $fighter)){
-				alert('You cannot choose the fighter');
+
+			if($isFighterChosen && 
+						($(this).data('name') === $fighter)){
+				alert('You cannot pick the warrior as the defender!');
 			}else{
-			
+				$("#attackBtn").show();
+				$("#attackBtn").attr("disabled", false);
+
 				$defender = $(this).data('name');
 				$isDefenderChosen = true;
 				$(this).css("border", "5px solid #FF0000");
@@ -108,16 +118,18 @@ $(document).ready(function(){
 			}
 		
 		}else{
+
 			alert("The game is on...wait.")
 		}
 
-		$("#attackBtn").attr("disabled", false);
+		$("attackBtn").show();
+		
 		console.log($fighter, $defender);
 
-		$("#resetBtn").on('click', function(){
-			location.reload();
-		});
+	});
 
+	$("#resetBtn").on('click', function(){
+		location.reload();
 	});
 
 
@@ -137,8 +149,8 @@ $(document).ready(function(){
 		$fighterAP = $fighterAP + $fighterCAP;
 		$($defenderScoreDiv).html($defenderHP);
 
-		var $status = 'You attacked ' + $defender + ' for ' + $fighterAP + ' points!' + '</br>'+
-					$defender + ' attacked you back with ' + $defenderCAP + ' points ';	
+		var $status = 'You attacked ' + $defender + ' ' + $fighterAP + ' times!' + '</br>'+
+					$defender + ' attacked you back ' + $defenderCAP + ' times! ';	
 
 		$('#attackStatus').html($status);
 		$('#attackStatus').css('color', '#FF8C00');
@@ -148,12 +160,13 @@ $(document).ready(function(){
 
 		if($defenderHP <=0){
 			console.log('defenderCount' , defenderCount.length);
+			
 			if(defenderCount.length <3)
 			{
 				$('#attackStatus').html('You defeated ' + $defender + '!' + '</br>' + 'Pick another Defender!' );
 					sound('win');	
 			}else{
-				$('#attackStatus').html('You defended all Enemies! <br> Press Reset to Play again!');
+				$('#attackStatus').html('VICTORY!! You ' + $fighter + ' defeateded all Enemies!');
 				sound('victory');
 				$("#resetBtn").show();
 			}
@@ -161,17 +174,17 @@ $(document).ready(function(){
 			$('#attackStatus').css('color', 'green');
 			var id= "#" + $defender;
 
-			// console.log('defender' + id);
-
 			$(id).hide('slow');
 
 			game.reset();
 
 		}else if ($fighterHP <=0){
 			var id= "#" + $fighter;
-			var $status = 'You have been defeated! Game over! Play Again!'
+			var $status = 'You ' + $fighter + ' have been defeated by ' + $defender ;
+	
 			$('#attackStatus').html($status);
 			$("#attackBtn").attr("disabled", true);
+			$(id).hide('slow');
 			
 			$("#resetBtn").show();
 
