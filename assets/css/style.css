@@ -92,11 +92,23 @@ figure{
 	color: #ffffff;
 	background-color: #000000;
 }
-
+#footer{
+	background-color: #000000;
+	color: #ffffff;
+	height: 10px;
+	font-size: 10px;
+	bottom:0;
+	position: absolute;
+	text-align: center;
+}
 #instructions{
 	font-size: 14px;
 	background-color: #000000;
 	color: #ffffff;
+}
+
+#audioBtn, #play{
+	color: red;
 }
 
 #battleTxt {
@@ -107,12 +119,6 @@ figure{
     animation-name: battleText;
     animation-duration: 4s;
     animation-iteration-count: infinite;
-}
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes battleText {
-    from {color: red;}
-    to {color: yellow;}
 }
 
 /* Standard syntax */
@@ -129,3 +135,5 @@ figure{
     90%  {color: grey;}
     100% {color: black;}
 }
+
+
